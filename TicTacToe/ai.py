@@ -10,7 +10,7 @@ class AI:
         if self.level == "easy":
             self.random_move()
         elif self.level == "medium":
-            self.smart_random_move()  # New improved logic for medium
+            self.smart_random_move()  
         else:
             self.minimax_move(depth=9)
 
@@ -21,7 +21,6 @@ class AI:
             self.game.make_ai_move(row, col)
 
     def smart_random_move(self):
-        # Try to win in one move
         for r in range(3):
             for c in range(3):
                 if self.game.board[r][c] == 0:
@@ -31,7 +30,6 @@ class AI:
                         self.game.make_ai_move(r, c)
                         return
 
-        # Try to block opponent's win
         for r in range(3):
             for c in range(3):
                 if self.game.board[r][c] == 0:
@@ -41,7 +39,6 @@ class AI:
                         self.game.make_ai_move(r, c)
                         return
 
-        # Otherwise random
         self.random_move()
 
     def minimax_move(self, depth):
@@ -52,7 +49,7 @@ class AI:
             for c in range(3):
                 if self.game.board[r][c] == 0:
                     temp_board = copy.deepcopy(self.game.board)
-                    temp_board[r][c] = 2  # AI move
+                    temp_board[r][c] = 2  
                     score = self.minimax(temp_board, depth - 1, False)
                     if score > best_score:
                         best_score = score
