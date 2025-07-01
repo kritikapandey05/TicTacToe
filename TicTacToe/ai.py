@@ -11,8 +11,8 @@ class AI:
             self.random_move()
         elif self.level == "medium":
             self.minimax_move(depth=1)
-        else:
-            self.minimax_move(depth=3)
+        else:  # hard
+            self.minimax_move(depth=9)
 
     def random_move(self):
         empty = [(r, c) for r in range(3) for c in range(3) if self.game.board[r][c] == 0]
@@ -28,19 +28,20 @@ class AI:
             for c in range(3):
                 if self.game.board[r][c] == 0:
                     temp_board = copy.deepcopy(self.game.board)
-                    temp_board[r][c] = 2
-                    score = self.minimax(temp_board, depth, False)
+                    temp_board[r][c] = 2  # AI move
+                    score = self.minimax(temp_board, depth - 1, False)
                     if score > best_score:
                         best_score = score
                         best_move = (r, c)
+
         if best_move:
             self.game.make_ai_move(*best_move)
 
     def minimax(self, board, depth, is_maximizing):
         winner = self.fake_check_win(board)
-        if winner == 2:
+        if winner == 2:  # AI wins
             return 1
-        elif winner == 1:
+        elif winner == 1:  # Human wins
             return -1
         elif all(cell != 0 for row in board for cell in row):
             return 0
